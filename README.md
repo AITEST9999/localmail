@@ -1,8 +1,32 @@
 # LocalMail
 
-**A local-first email inbox API, built for AI agents.**
+<p align="center">
+  <img src="docs/assets/localmail-hero.svg" alt="LocalMail — email API, agent inboxes, and SMTP for developers" width="100%" />
+</p>
+
+<p align="center">
+  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
+  <a href="#quickstart-local"><img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg" alt="Node.js 20+" /></a>
+  <a href="docker-compose.yml"><img src="https://img.shields.io/badge/docker-compose-2496ED.svg?logo=docker&logoColor=white" alt="Docker Compose" /></a>
+  <img src="https://img.shields.io/badge/stack-Fastify%20%7C%20Postgres%20%7C%20Redis-0f172a.svg" alt="Stack" />
+</p>
+
+<p align="center"><strong>A local-first email inbox API, built for AI agents.</strong></p>
 
 LocalMail gives every agent its own real inbox — create it with one API call, send from it, receive into it, and react to what arrives — through a REST API, TypeScript/Python SDKs, a CLI, WebSockets, webhooks, and an MCP server. It runs entirely on your own machine (or your own Docker host) via Docker Compose: no real domain, no DNS, no public internet required to develop against.
+
+```mermaid
+flowchart LR
+  Clients[SDKs / CLI / MCP] --> API[API]
+  SMTP[SMTP] --> API
+  API --> Workers[Workers]
+  API --> PG[(Postgres)]
+  Workers --> PG
+  API --> Redis[(Redis)]
+  Workers --> Redis
+  API --> S3[(MinIO / S3)]
+  API --> Mailpit[Mailpit]
+```
 
 ---
 
