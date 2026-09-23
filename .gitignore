@@ -57,3 +57,15 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+
+# Keys / certs / credentials (defense in depth)
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*credentials*.json
+!.env.example
