@@ -1,0 +1,84 @@
+# syntax=docker/dockerfile:1.7
+#
+# LocalMail monorepo — multi-target image for Railway (and friends).
+#
+# Build examples:
+#   docker build --target api       -t localmail-api .
+#   docker build --target workers   -t localmail-workers .
+#   docker build --target smtp      -t localmail-smtp .
+#   docker build --target dashboard -t localmail-dashboard .
+#
+# Railway: Dockerfile path = Dockerfile; set Docker build *target* per service
+# (api | workers | smtp | dashboard). No extra SERVICE build-arg required.
+
+ARG NODE_VERSION=22
+
+# -----------------------------------------------------------------------------
+FROM node:${NODE_VERSION}-bookworm-slim AS base
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN corepack enable && corepack prepare pnpm@9.15.9 --activate \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates tini \
+  && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+
+# -----------------------------------------------------------------------------
+FROM base AS deps
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json .npmrc ./
+COPY tsconfig.base.json ./
+COPY apps/api/package.json apps/api/package.json
+COPY apps/workers/package.json apps/workers/package.json
+COPY apps/smtp/package.json apps/smtp/package.json
+COPY apps/dashboard/package.json apps/dashboard/package.json
+COPY packages/config/package.json packages/config/package.json
+COPY packages/core/package.json packages/core/package.json
+COPY packages/db/package.json packages/db/package.json
+COPY packages/events/package.json packages/events/package.json
+COPY packages/embeddings/package.json packages/embeddings/package.json
+COPY packages/jev/package.json packages/jev/package.json
+COPY packages/sdk/package.json packages/sdk/package.json
+COPY apps/mcp/package.json apps/mcp/package.json
+COPY packages/cli/package.json packages/cli/package.json
+COPY examples/agent-to-agent/package.json examples/agent-to-agent/package.json
+COPY examples/auto-reply-agent/package.json examples/auto-reply-agent/package.json
+COPY examples/otp-signup-agent/package.json examples/otp-signup-agent/package.json
+RUN pnpm install --frozen-lockfile
+
+# -----------------------------------------------------------------------------
+FROM deps AS sources
+COPY apps/api apps/api
+COPY apps/workers apps/workers
+COPY apps/smtp apps/smtp
+COPY apps/dashboard apps/dashboard
+COPY packages packages
+COPY docker docker
+RUN pnpm install --frozen-lockfile
+
+FROM sources AS build-api
+RUN pnpm turbo run build --filter="@localmail/api..."
+
+FROM sources AS build-workers
+RUN pnpm turbo run build --filter="@localmail/workers..."
+
+FROM sources AS build-smtp
+RUN pnpm turbo run build --filter="@localmail/smtp..."
+
+FROM sources AS build-dashboard
+RUN pnpm turbo run build --filter="@localmail/dashboard..."
+
+# -----------------------------------------------------------------------------
+FROM base AS node-runtime
+ENV NODE_ENV=production
+COPY docker/entrypoint.sh /usr/local/bin/localmail-entrypoint
+RUN chmod +x /usr/local/bin/localmail-entrypoint
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/localmail-entrypoint"]
+
+# -----------------------------------------------------------------------------
+FROM node-runtime AS workers
+ENV SERVICE=workers
+COPY --from=build-workers /app /app
+WORKDIR /app
+# No public HTTP listener — disable Railway HTTP healthchecks for this service.
+CMD ["node", "apps/workers/dist/server.js"]
