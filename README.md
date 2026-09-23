@@ -174,6 +174,8 @@ curl -s -X POST https://api-production-717c.up.railway.app/v1/inboxes \
 
 Two LocalMail inboxes can email each other directly (loopback, no outbound relay involved), or send to any external address and watch it land in Mailpit.
 
+For a full, copy-pasteable operator checklist against the live demo above (health → auth → create inboxes → send → search → dashboard login, ~15–30 min), see [`TESTING.md`](TESTING.md).
+
 Run the full repo check locally with:
 
 ```bash
