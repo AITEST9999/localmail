@@ -1,7 +1,7 @@
 # LocalMail
 
 <p align="center">
-  <img src="docs/assets/localmail-hero.svg" alt="LocalMail — email API, agent inboxes, and SMTP for developers" width="100%" />
+  <img src="docs/localmail-hero.svg" alt="LocalMail — every agent gets a real inbox" width="100%" />
 </p>
 
 <p align="center">
