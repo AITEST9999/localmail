@@ -1,0 +1,56 @@
+{
+  "name": "@localmail/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./outbound": {
+      "types": "./src/outbound.ts",
+      "default": "./src/outbound.ts"
+    },
+    "./store": {
+      "types": "./src/store.ts",
+      "default": "./src/store.ts"
+    },
+    "./draft-service": {
+      "types": "./src/draft-service.ts",
+      "default": "./src/draft-service.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --max-warnings=0",
+    "openapi:export": "tsx src/export-openapi.ts",
+    "start": "node dist/server.js",
+    "test": "pnpm --filter @localmail/core build && pnpm --filter @localmail/db build && pnpm --filter @localmail/events build && vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^10.1.2",
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^5.2.3",
+    "@fastify/websocket": "^11.3.1",
+    "@localmail/config": "workspace:*",
+    "@localmail/core": "workspace:^",
+    "@localmail/db": "workspace:*",
+    "@localmail/embeddings": "workspace:^",
+    "@localmail/events": "workspace:^",
+    "drizzle-orm": "^0.38.3",
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1",
+    "fastify-type-provider-zod": "^4.0.2",
+    "ioredis": "^5.8.2",
+    "nodemailer": "^10.0.10",
+    "pino": "^10.3.1",
+    "prom-client": "^15.1.3",
+    "ws": "^8.21.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.2",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.19.2"
+  }
+}

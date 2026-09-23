@@ -1,0 +1,10 @@
+From: Boutique <boutique@example.com>
+To: agent@localmail.test
+Subject: =?ISO-8859-1?Q?Caf=E9_r=E9sum=E9?=
+Message-ID: <latin1-charset-001@example.com>
+Date: Tue, 23 Sep 2026 14:08:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+
+Prix: 42 - déjà vu. Merci beaucoup.

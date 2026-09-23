@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Env / secrets — never commit real env files
+.env
+.env.*
+!.env.example
+
+# Build / framework outputs
+dist/
+build/
+out/
+.next/
+.turbo/
+.cache/
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# ONNX / ML model caches
+*.onnx
+**/.onnx/
+**/onnx-cache/
+**/models/cache/
+.cache/huggingface/
+.huggingface/
+
+# Logs & debug
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Misc local
+*.local
+.tmp/
+tmp/

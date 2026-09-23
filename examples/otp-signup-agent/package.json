@@ -1,0 +1,20 @@
+{
+  "name": "@localmail/example-otp-signup-agent",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint src --max-warnings=0",
+    "smoke": "tsx src/smoke.ts",
+    "test": "pnpm --filter @localmail/sdk build && vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@localmail/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.2",
+    "nodemailer": "^10.0.10",
+    "tsx": "^4.19.2"
+  }
+}

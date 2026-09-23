@@ -1,0 +1,2 @@
+import { getSession } from './session';
+export async function api(path: string, init: RequestInit = {}) { const session = await getSession(); if (!session) return null; const headers = new Headers(init.headers); headers.set('authorization', `Bearer ${session.apiKey}`); headers.set('content-type', 'application/json'); const response = await fetch(`${process.env.LOCALMAIL_API_URL ?? 'http://localhost:8080'}${path}`, { ...init, headers }); if (!response.ok) throw new Error(`LocalMail API ${response.status}`); return response; }

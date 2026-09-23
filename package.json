@@ -1,0 +1,36 @@
+{
+  "name": "localmail",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A local-first email inbox API for AI agents",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "build": "turbo run build",
+    "check": "turbo run typecheck lint test",
+    "clean": "turbo run clean",
+    "db:generate": "pnpm --filter @localmail/db generate",
+    "db:migrate": "pnpm --filter @localmail/db migrate",
+    "db:seed": "pnpm --filter @localmail/db seed",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.7",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2"
+  }
+}

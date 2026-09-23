@@ -1,0 +1,10 @@
+From: Alice Customer <alice@example.com>
+To: support-bot@localmail.test
+Subject: I was charged twice!
+Message-ID: <billing-complaint-001@example.com>
+Date: Tue, 23 Sep 2026 14:00:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Please refund ASAP. I was charged twice for the same invoice and need this fixed today.

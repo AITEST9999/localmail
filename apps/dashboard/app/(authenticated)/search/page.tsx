@@ -1,0 +1,3 @@
+import { redirect } from 'next/navigation';
+import { api } from '../../../lib/api';
+export default async function Search({ searchParams }: { searchParams: Promise<{ q?: string }> }) { const { q } = await searchParams; const response = q ? await api(`/v1/search?q=${encodeURIComponent(q)}`) : null; if (response === null && q) redirect('/login'); const body = response ? await response.json() as { data: Array<{ id: string; subject: string | null; rank: number }> } : { data: [] }; return <main><h1>Search</h1><form><input name="q" defaultValue={q} placeholder="Search messages" /><button>Search</button></form><ul>{body.data.map((message) => <li key={message.id}>{message.subject ?? '(no subject)'} — rank {message.rank}</li>)}</ul></main>; }

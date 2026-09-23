@@ -1,0 +1,36 @@
+{
+  "name": "@localmail/workers",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "types": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --max-warnings=0",
+    "start": "node dist/server.js",
+    "backfill:embeddings": "tsx src/backfill-embeddings.ts",
+    "test": "pnpm --filter @localmail/core build && pnpm --filter @localmail/db build && pnpm --filter @localmail/events build && pnpm --filter @localmail/jev build && vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@localmail/api": "workspace:*",
+    "@localmail/config": "workspace:^",
+    "@localmail/core": "workspace:^",
+    "@localmail/db": "workspace:^",
+    "@localmail/embeddings": "workspace:^",
+    "@localmail/events": "workspace:^",
+    "@localmail/jev": "workspace:^",
+    "bullmq": "^6.3.8",
+    "drizzle-orm": "^0.38.3",
+    "ioredis": "^5.8.2",
+    "prom-client": "^15.1.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}
