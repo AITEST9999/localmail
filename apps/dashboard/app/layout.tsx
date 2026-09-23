@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
+import { Inter, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
-import Link from 'next/link';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-ibm-plex-mono',
+});
+
+export const metadata: Metadata = { title: 'LocalMail' };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><nav style={{ padding: '1rem 2rem', borderBottom: '1px solid #ddd', display: 'flex', gap: '1rem' }}><strong>LocalMail</strong><Link href="/inboxes">Inboxes</Link><Link href="/search">Search</Link><Link href="/webhooks">Webhooks</Link><Link href="/domains">Domains</Link><Link href="/settings/api-keys">API keys</Link><form action="/api/session/logout" method="post" style={{ marginLeft: 'auto' }}><button>Log out</button></form></nav>{children}</body></html>;
+  return (
+    <html lang="en" className={`${inter.variable} ${ibmPlexMono.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
 }

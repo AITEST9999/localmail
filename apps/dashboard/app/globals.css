@@ -1,6 +1,139 @@
 @import 'tailwindcss';
 
-body { margin: 0; background: #f7f7f5; color: #202124; font-family: system-ui, sans-serif; }
-a { color: inherit; text-decoration: none; }
-main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-button, input { font: inherit; }
+/* LocalMail design tokens — from Design Desk handoff */
+:root {
+  --lm-bg: #06090f;
+  --lm-bg-elevated: #0b1220;
+  --lm-surface: #101826;
+  --lm-surface-hover: #152033;
+  --lm-surface-active: #1a2436;
+  --lm-border: #1e293b;
+  --lm-border-strong: #334155;
+  --lm-text: #f8fafc;
+  --lm-text-muted: #94a3b8;
+  --lm-text-faint: #64748b;
+  --lm-accent: #22d3ee;
+  --lm-accent-muted: rgba(34, 211, 238, 0.12);
+  --lm-accent-border: rgba(34, 211, 238, 0.35);
+  --lm-violet: #a78bfa;
+  --lm-violet-muted: rgba(167, 139, 250, 0.14);
+  --lm-success: #34d399;
+  --lm-success-muted: rgba(52, 211, 153, 0.14);
+  --lm-warning: #f59e0b;
+  --lm-warning-muted: rgba(245, 158, 11, 0.14);
+  --lm-danger: #f87171;
+  --lm-danger-muted: rgba(248, 113, 113, 0.14);
+  --lm-sidebar-w: 240px;
+  --lm-radius-sm: 6px;
+  --lm-radius: 8px;
+  --lm-radius-lg: 10px;
+  --lm-font-sans: var(--font-inter, Inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --lm-font-mono: var(--font-ibm-plex-mono, "IBM Plex Mono"), ui-monospace, "Geist Mono", Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --color-lm-bg: var(--lm-bg);
+  --color-lm-bg-elevated: var(--lm-bg-elevated);
+  --color-lm-surface: var(--lm-surface);
+  --color-lm-surface-hover: var(--lm-surface-hover);
+  --color-lm-surface-active: var(--lm-surface-active);
+  --color-lm-border: var(--lm-border);
+  --color-lm-border-strong: var(--lm-border-strong);
+  --color-lm-text: var(--lm-text);
+  --color-lm-muted: var(--lm-text-muted);
+  --color-lm-faint: var(--lm-text-faint);
+  --color-lm-accent: var(--lm-accent);
+  --color-lm-success: var(--lm-success);
+  --color-lm-warning: var(--lm-warning);
+  --color-lm-danger: var(--lm-danger);
+  --color-lm-violet: var(--lm-violet);
+  --font-sans: var(--lm-font-sans);
+  --font-mono: var(--lm-font-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--lm-bg);
+  color: var(--lm-text);
+  font-family: var(--lm-font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--lm-accent);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+code,
+.mono {
+  font-family: var(--lm-font-mono);
+  font-size: 12px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--lm-accent);
+  outline-offset: 2px;
+}
+
+/* Email HTML content island — keep mail readable on dark chrome */
+.lm-email-island {
+  background: #ffffff;
+  color: #202124;
+  border: 1px solid var(--lm-border);
+  border-radius: var(--lm-radius);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+
+.lm-email-island a {
+  color: #1a73e8;
+}
+
+/* Interactive utilities used by components */
+.sidebar-link-hover:hover {
+  background: var(--lm-surface-hover) !important;
+  color: var(--lm-text) !important;
+}
+
+.table-row-hover:hover {
+  background: var(--lm-surface-hover) !important;
+}
+
+.address-link:hover {
+  color: var(--lm-accent) !important;
+}
+
+.logout-btn-hover:hover {
+  background: var(--lm-surface-hover) !important;
+  color: var(--lm-text) !important;
+}
+
+.details-summary-hover:hover {
+  background: var(--lm-surface-hover);
+}
