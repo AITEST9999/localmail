@@ -167,49 +167,6 @@ Never invent or commit real values for any of these — `.env` is git-ignored fo
 
 ---
 
-## Live demo
-
-*Valid as of 2026-09-23:*
-
-| | |
-|---|---|
-| API | https://api-production-717c.up.railway.app |
-| Dashboard | https://dashboard-production-9fad.up.railway.app |
-| Mailpit | https://mailpit-production-4625.up.railway.app |
-| Inbound SMTP | `roundhouse.proxy.rlwy.net:38181` (TCP) |
-
----
-
-## Smoke test / E2E
-
-```bash
-# health
-curl -s https://api-production-717c.up.railway.app/healthz
-
-# authenticated request
-curl -s https://api-production-717c.up.railway.app/v1/me \
-  -H "Authorization: Bearer $ADMIN_API_KEY"
-
-# create an inbox
-curl -s -X POST https://api-production-717c.up.railway.app/v1/inboxes \
-  -H "Authorization: Bearer $ADMIN_API_KEY" -H "Content-Type: application/json" \
-  -d '{"username":"support-bot","display_name":"Support Bot"}'
-```
-
-Two LocalMail inboxes can email each other directly (loopback, no outbound relay involved), or send to any external address and watch it land in Mailpit.
-
-For a full, copy-pasteable operator checklist against the live demo above (health → auth → create inboxes → send → search → dashboard login, ~15–30 min), see [`TESTING.md`](TESTING.md).
-
-Run the full repo check locally with:
-
-```bash
-pnpm check   # typecheck + lint + test, every package
-```
-
-A parameterized load test lives under [`k6/`](k6) if you want to exercise the API at scale (defaults to 1,000 inboxes / 10,000 messages; scale it down for a quick local run — see `k6/README.md`).
-
----
-
 ## More
 
 - **Examples** — [`examples/agent-to-agent`](examples/agent-to-agent) (two inboxes negotiating a meeting over email), [`examples/auto-reply-agent`](examples/auto-reply-agent) (a deterministic support/billing auto-responder), [`examples/otp-signup-agent`](examples/otp-signup-agent) (`waitForEmail` for a verification-code flow)
